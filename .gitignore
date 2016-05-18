@@ -6,7 +6,11 @@ __pycache__/
 # IDEA files
 .idea
 
+# folder with code to refactor
 sources
+
+# jupyter
+*.ipynb
 
 # C extensions
 *.so
