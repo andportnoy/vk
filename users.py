@@ -1,5 +1,6 @@
-from . import core
 import math
+
+from . import core
 
 
 def get(token=None, user_ids=None, fields=None, name_case=None):
