@@ -85,3 +85,7 @@ def vdr(method, params_dict=None):
                               'Got the following response:')
                         print(response)
             break
+
+def params_dict_from_locals(locals_dict):
+
+    return {param: value for param, value in locals_dict.items() if value is not None}

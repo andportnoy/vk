@@ -1,11 +1,11 @@
 from . import core
 
-def get(token=None, owner_id=None, domain=None, offset=None, count=None,
+def get(access_token=None, owner_id=None, domain=None, offset=None, count=None,
         filter=None, extended=None, fields=None):
 
     params_dict = {}
-    if token:
-        params_dict['access_token'] = token
+    if access_token:
+        params_dict['access_token'] = access_token
     if owner_id:
         params_dict['owner_id'] = owner_id
     if domain:

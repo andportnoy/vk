@@ -3,7 +3,7 @@ import math
 from . import core
 
 
-def get(token=None, user_ids=None, fields=None, name_case=None):
+def get(access_token=None, user_ids=None, fields=None, name_case=None):
 
     """user_ids has to be a list of ids"""
     user_ids = ','.join(str(uid) for uid in user_ids)
@@ -21,20 +21,20 @@ def get(token=None, user_ids=None, fields=None, name_case=None):
         print(n_batches, 'batches.')
         for i in range(n_batches):
             batch = user_ids[i: (i+1) * batch_size]
-            result += _get_batch(token=token, user_ids=batch,
+            result += _get_batch(access_token=access_token, user_ids=batch,
                                  fields=fields, name_case=name_case)
             print('Batch', i+1, 'out of', n_batches, 'received.')
     else:
-        return _get_batch(token=token, user_ids=user_ids,
+        return _get_batch(access_token=access_token, user_ids=user_ids,
                           fields=fields, name_case=name_case)
 
     return result
 
 
-def _get_batch(token=None, user_ids=None, fields=None, name_case=None):
+def _get_batch(access_token=None, user_ids=None, fields=None, name_case=None):
     params_dict = {}
-    if token:
-        params_dict['access_token'] = token
+    if access_token:
+        params_dict['access_token'] = access_token
     if user_ids:
         params_dict['user_ids'] = user_ids
     if fields:
