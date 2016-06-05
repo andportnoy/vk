@@ -32,7 +32,8 @@ def get_token(app_id=5080984):
         s.post(url, login_credentials)
 
         # get token
-        token_containing_url = s.get(token_request_url, params=token_request_params).url
+        token_containing_url = s.get(token_request_url,
+                                     params=token_request_params).url
         token_pattern = r'(?<=access_token=)[\w]+(?=&)'
         token = re.findall(token_pattern, token_containing_url)
     if token:
