@@ -1,5 +1,6 @@
 import re
 import time
+import math
 import requests
 import getpass
 
@@ -53,10 +54,11 @@ def read_token():
     else:
         return token
 
+
 def vdr(method, params_dict=None):
 
     # set API version
-    params_dict['v'] = '5.8'
+    params_dict['v'] = '5.52'
     api_url = "https://api.vk.com/method/" + method
 
     # attempt to connect
@@ -86,6 +88,49 @@ def vdr(method, params_dict=None):
                         print(response)
             break
 
-def params_dict_from_locals(locals_dict):
 
-    return {param: value for param, value in locals_dict.items() if value is not None}
+def execute_in_batches(func, inputs, batch_size, params):
+    """Handle VK API getters that have a max count.
+
+    :param func: underlying VK API
+    :param inputs: list of inputs (most often user or group ids)
+    :param batch_size: max count for the underlying VK API function
+    :param params: dict of additional parameters for ``func``
+
+    :return: list of results
+    """
+
+    # inputs is a dictionary with a single key, so we need to take
+    # the length of the value under that key and preserve the key
+    # to pass it on to the underlying VK API method
+
+    inputs_name, inputs_data = inputs.popitem()
+    n_inputs = len(inputs_data)
+
+    result = []
+
+    if n_inputs > batch_size:
+
+        # This is Python 3, in Python 2 this is incorrect
+        n_batches = math.ceil(n_inputs / batch_size)
+        print(n_batches, 'batches.')
+
+        for i in range(n_batches):
+            batch = inputs_data[i * batch_size: (i + 1) * batch_size]
+            print('Length of batch is:', len(batch))
+            batch_result = func(**params, **{inputs_name: batch})
+            print('Length of batch result is:', len(batch_result))
+            result += batch_result
+            print('Batch', i + 1, 'out of', n_batches, 'received.')
+            print('Result now has length', len(result))
+        return result
+    else:
+        return func(**params, **{inputs_name: inputs_data})
+
+
+
+def params_dict_from_locals(locals_dict):
+    return {param: value for param, value in locals_dict.items()
+            if value is not None}
+
+
