@@ -11,6 +11,7 @@ def get(access_token=None, owner_id=None, domain=None,
 
     batch_size = 100
     n_batches = math.ceil(total / batch_size)
+    
     posts = []
     for i in tqdm(range(n_batches)):
         offset = batch_size * i
