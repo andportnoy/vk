@@ -1,4 +1,3 @@
-from .tokensession import TokenSession
 from . import users
 from . import friends
 from . import wall
