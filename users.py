@@ -23,8 +23,8 @@ def get(access_token=None, user_ids=None, fields=None, name_case=None):
 
     # create params dictionary from passed arguments,
     # but put user_ids in a separate dict
-    params = core.params_dict_from_locals(locals())
-    user_ids = {'user_ids': params.pop('user_ids')}
+    params_dict = core.params_dict_from_locals(locals())
+    user_ids = {'user_ids': params_dict.pop('user_ids')}
 
     # the API method only accepts at most 1000 user ids,
     # but in reality it can't handle more than 900 long ids,
@@ -34,7 +34,7 @@ def get(access_token=None, user_ids=None, fields=None, name_case=None):
     result = core.request_in_batches(_get_batch_of_users,
                                      user_ids,
                                      batch_size,
-                                     params)
+                                     params_dict)
 
     return result
 
