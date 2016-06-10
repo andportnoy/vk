@@ -3,6 +3,7 @@ import time
 import math
 import requests
 import getpass
+from tqdm import tqdm
 
 from .errors import VKError
 from json.decoder import JSONDecodeError
@@ -110,28 +111,22 @@ def request_in_batches(func, inputs, batch_size, params):
 
     result = []
 
+    # TODO use logging instead of printing to keep track of batch requests
     if n_inputs > batch_size:
 
         # This is Python 3, in Python 2 this is incorrect
         n_batches = math.ceil(n_inputs / batch_size)
         print(n_batches, 'batches.')
 
-        for i in range(n_batches):
+        for i in tqdm(range(n_batches)):
             batch = inputs_data[i * batch_size: (i + 1) * batch_size]
-            print('Length of batch is:', len(batch))
             batch_result = func(**params, **{inputs_name: batch})
-            print('Length of batch result is:', len(batch_result))
             result += batch_result
-            print('Batch', i + 1, 'out of', n_batches, 'received.')
-            print('Result now has length', len(result))
         return result
     else:
         return func(**params, **{inputs_name: inputs_data})
 
 
-
 def params_dict_from_locals(locals_dict):
     return {param: value for param, value in locals_dict.items()
             if value is not None}
-
-
