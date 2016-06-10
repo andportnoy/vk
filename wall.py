@@ -27,6 +27,9 @@ def get(access_token=None, owner_id=None, domain=None, offset=None, count=None,
 
 
 def getById(posts=None, extended=None, copy_history_depth=None, fields=None):
+def get_count(access_token=None, owner_id=None, domain=None, filter=None):
+    params_dict = core.params_dict_from_locals(locals())
+    return _get_batch_of_posts(**params_dict, count=1)['count']
 
     """posts is a comma-joined string of post ids."""
     params_dict = {}
