@@ -1,27 +1,33 @@
+from tqdm import tqdm
+import math
 from . import core
 
-def get(access_token=None, owner_id=None, domain=None, offset=None, count=None,
+
+def get(access_token=None, owner_id=None, domain=None,
         filter=None, extended=None, fields=None):
 
-    params_dict = {}
-    if access_token:
-        params_dict['access_token'] = access_token
-    if owner_id:
-        params_dict['owner_id'] = owner_id
-    if domain:
-        params_dict['domain'] = domain
-    if offset:
-        params_dict['offset'] = offset
-    if count:
-        params_dict['count'] = count
-    if filter:
-        params_dict['filter'] = filter
-    if extended:
-        params_dict['extended'] = extended
-    if fields:
-        params_dict['fields'] =  fields
+    params_dict = core.params_dict_from_locals(locals())
+    total = get_count(access_token=access_token, owner_id=owner_id, domain=domain, filter=filter)
 
-    result = core.vdr('wall.get', params_dict)
+    batch_size = 100
+    n_batches = math.ceil(total / batch_size)
+    posts = []
+    for i in tqdm(range(n_batches)):
+        offset = batch_size * i
+        posts += _get_batch_of_posts(**params_dict, offset=offset)['items']
+
+    return posts
+
+
+def _get_batch_of_posts(access_token=None, owner_id=None, domain=None, offset=None,
+                        count=100, filter=None, extended=None, fields=None):
+
+    if access_token is None and owner_id is None and domain is None:
+        raise TypeError('either access_token, owner_id'
+                        'or domain must be not None.')
+
+    params_dict = core.params_dict_from_locals(locals())
+    result = core.vdr('wall.get', params_dict=params_dict)
 
     return result
 
