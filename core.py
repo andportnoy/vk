@@ -90,11 +90,11 @@ def vdr(method, params_dict=None):
             break
 
 
-def execute_in_batches(func, inputs, batch_size, params):
+def request_in_batches(func, inputs, batch_size, params):
     """Handle VK API getters that have a max count.
 
     :param func: underlying VK API
-    :param inputs: list of inputs (most often user or group ids)
+    :param inputs: dict singleton of inputs (most often user or group ids)
     :param batch_size: max count for the underlying VK API function
     :param params: dict of additional parameters for ``func``
 

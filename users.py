@@ -31,7 +31,7 @@ def get(access_token=None, user_ids=None, fields=None, name_case=None):
     # possibly because of commas overhead
     # for explanation of the choice of batch_size, see relevant notebook
     batch_size = 900
-    result = core.execute_in_batches(_get_batch_of_users,
+    result = core.request_in_batches(_get_batch_of_users,
                                      user_ids,
                                      batch_size,
                                      params)
