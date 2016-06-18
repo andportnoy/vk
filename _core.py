@@ -8,7 +8,7 @@ from tqdm import tqdm
 from .errors import VKError
 from json.decoder import JSONDecodeError
 
-
+next
 def get_token(app_id=5080984):
 
     login_url = 'https://m.vk.com'
@@ -66,7 +66,7 @@ def vdr(method, params_dict=None):
     while True:
         try:
             raw_response = requests.post(api_url, data=params_dict)
-        except (ConnectionError, ConnectionResetError):
+        except ConnectionError:
             print('Connection error. Retrying in 1 s.')
             time.sleep(1)
         else:
