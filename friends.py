@@ -1,10 +1,11 @@
 from . import _core
 
+
 def get(access_token=None, user_id=None, order=None,
         count=None, offset=None, fields=None, name_case=None):
 
     if access_token is None and user_id is None:
-        raise
+        raise TypeError('either access_token or user_id must be not None')
     if fields is not None:
         raise NotImplementedError('Batching for requests with fields not None'
                                   'is not supported yet.')
