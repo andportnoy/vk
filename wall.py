@@ -1,4 +1,4 @@
-from tqdm import tqdm
+from tqdm import tqdm_notebook as tqdm
 import math
 from . import _core
 
@@ -13,7 +13,7 @@ def get(access_token=None, owner_id=None, domain=None,
     n_batches = math.ceil(total / batch_size)
 
     posts = []
-    for i in tqdm(range(n_batches)):
+    for i in tqdm(range(n_batches), desc=str(owner_id)):
         offset = batch_size * i
         posts += _get_batch_of_posts(**params_dict, offset=offset)['items']
 
