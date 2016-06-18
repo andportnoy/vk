@@ -1,4 +1,4 @@
-from . import core
+from . import _core
 
 
 def get(access_token=None, user_ids=None, fields=None, name_case=None):
@@ -23,7 +23,7 @@ def get(access_token=None, user_ids=None, fields=None, name_case=None):
 
     # create params dictionary from passed arguments,
     # but put user_ids in a separate dict
-    params_dict = core.params_dict_from_locals(locals())
+    params_dict = _core.params_dict_from_locals(locals())
     user_ids = {'user_ids': params_dict.pop('user_ids')}
 
     # the API method only accepts at most 1000 user ids,
@@ -31,10 +31,10 @@ def get(access_token=None, user_ids=None, fields=None, name_case=None):
     # possibly because of commas overhead
     # for explanation of the choice of batch_size, see relevant notebook
     batch_size = 900
-    result = core.request_in_batches(_get_batch_of_users,
-                                     user_ids,
-                                     batch_size,
-                                     params_dict)
+    result = _core.request_in_batches(_get_batch_of_users,
+                                      user_ids,
+                                      batch_size,
+                                      params_dict)
 
     return result
 
@@ -44,7 +44,7 @@ def _get_batch_of_users(access_token=None, user_ids=None,
 
     user_ids = ','.join(str(uid) for uid in user_ids)
 
-    params_dict = core.params_dict_from_locals(locals())
-    result = core.vdr('users.get', params_dict=params_dict)
+    params_dict = _core.params_dict_from_locals(locals())
+    result = _core.vdr('users.get', params_dict=params_dict)
 
     return result
