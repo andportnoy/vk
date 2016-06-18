@@ -3,8 +3,6 @@ from . import _core
 def get(access_token=None, user_id=None, order=None,
         count=None, offset=None, fields=None, name_case=None):
 
-    params_dict = core.params_dict_from_locals(locals())
-    result = core.vdr('friends.get', params_dict)
     if access_token is None and user_id is None:
         raise
     if fields is not None:
@@ -20,4 +18,3 @@ def _get_batch_of_friends(access_token=None, user_id=None, order=None, count=Non
     # TODO implement batching for friends.get with fields parameter
     raise NotImplementedError
 
-    return result
