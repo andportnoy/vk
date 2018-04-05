@@ -7,7 +7,8 @@ def get(access_token=None, owner_id=None, domain=None,
         filter=None, extended=None, fields=None):
 
     params_dict = _core.params_dict_from_locals(locals())
-    total = get_count(access_token=access_token, owner_id=owner_id, domain=domain, filter=filter)
+    total = get_count(access_token=access_token, owner_id=owner_id,
+                      domain=domain, filter=filter)
 
     batch_size = 100
     n_batches = math.ceil(total / batch_size)

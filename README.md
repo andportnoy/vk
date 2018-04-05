@@ -20,31 +20,31 @@ in _error_catcher(self)
     --> 226                 yield
         227 
 
-        /home/ec2-user/miniconda3/lib/python3.5/site-packages/requests/packages/urllib3/response.py
-        in read(self, amt, decode_content, cache_content)
-            300                 cache_content = False
-            --> 301                 data = self._fp.read(amt)
-                302                 if amt != 0 and not data:  #
-                Platform-specific: Buggy versions of Python.
+/home/ec2-user/miniconda3/lib/python3.5/site-packages/requests/packages/urllib3/response.py
+in read(self, amt, decode_content, cache_content)
+    300                 cache_content = False
+    --> 301                 data = self._fp.read(amt)
+        302                 if amt != 0 and not data:  #
+        Platform-specific: Buggy versions of Python.
 
-                /home/ec2-user/miniconda3/lib/python3.5/http/client.py in
-                read(self, amt)
-                    432             b = bytearray(amt)
-                    --> 433             n = self.readinto(b)
-                        434             return memoryview(b)[:n].tobytes()
+/home/ec2-user/miniconda3/lib/python3.5/http/client.py in
+read(self, amt)
+    432             b = bytearray(amt)
+    --> 433             n = self.readinto(b)
+        434             return memoryview(b)[:n].tobytes()
 
-                        /home/ec2-user/miniconda3/lib/python3.5/http/client.py
-                        in readinto(self, b)
-                            472         # (for example, reading in 1k chunks)
-                            --> 473         n = self.fp.readinto(b)
-                                474         if not n and b:
+/home/ec2-user/miniconda3/lib/python3.5/http/client.py
+in readinto(self, b)
+    472         # (for example, reading in 1k chunks)
+    --> 473         n = self.fp.readinto(b)
+        474         if not n and b:
 
-                                /home/ec2-user/miniconda3/lib/python3.5/socket.py
-                                in readinto(self, b)
-                                    574             try:
-                                    --> 575                 return
-                                    self._sock.recv_into(b)
-                                        576             except timeout:
+/home/ec2-user/miniconda3/lib/python3.5/socket.py
+in readinto(self, b)
+    574             try:
+    --> 575                 return
+    self._sock.recv_into(b)
+        576             except timeout:
 
                                         /home/ec2-user/miniconda3/lib/python3.5/ssl.py
                                         in recv_into(self, buffer, nbytes,
@@ -300,7 +300,7 @@ in _error_catcher(self)
                                                                                                                                                                                    68
                                                                                                                                                                                    try:
                                                                                                                                                                                    --->
-                                                                                                                                                                                   69
+                                                                                                                    ```~~~~~~~~```                                                               69
                                                                                                                                                                                    raw_response
                                                                                                                                                                                    =
                                                                                                                                                                                    requests.post(api_url,
